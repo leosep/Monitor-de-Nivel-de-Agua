@@ -25,7 +25,9 @@ Este proyecto implementa un sistema automático de monitoreo y control de nivel 
   - TRIG: GPIO 23
   - ECHO: GPIO 24
 - **Relé**: GPIO 17
-- **OLED**: I2C (SDA: GPIO 2, SCL: GPIO 3)
+- **OLED** (modo I2C):
+  - SDA: GPIO 2
+  - SCL: GPIO 3
 
 ## Instalación
 
@@ -48,7 +50,7 @@ Este proyecto implementa un sistema automático de monitoreo y control de nivel 
    sudo pip3 install flask
    ```
 
-4. Habilita I2C en tu Raspberry Pi:
+4. Habilita I2C en tu Raspberry Pi (para el OLED):
    ```bash
    sudo raspi-config
    ```
