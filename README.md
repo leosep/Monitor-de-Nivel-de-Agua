@@ -87,6 +87,46 @@ Este proyecto implementa un sistema automático de monitoreo y control de nivel 
 - Envía una notificación Pushbullet cuando se apaga automáticamente
 - Permite control manual a través de la interfaz web
 
+## Ejecución Automática al Inicio (Autostart)
+
+Para que el script se ejecute automáticamente cuando enciendas la Raspberry Pi, recomendamos usar **systemd**.
+
+1. Crea un archivo de servicio:
+   ```bash
+   sudo nano /etc/systemd/system/water_monitor.service
+   ```
+
+2. Pega el siguiente contenido (ajusta la ruta `/home/pi/JesusProject` si tu proyecto está en otro lugar):
+   ```ini
+   [Unit]
+   Description=Monitor de Nivel de Agua
+   After=network.target
+
+   [Service]
+   ExecStart=/usr/bin/python3 /home/pi/JesusProject/water_level_monitor.py
+   WorkingDirectory=/home/pi/JesusProject
+   StandardOutput=inherit
+   StandardError=inherit
+   Restart=always
+   User=pi
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+3. Guarda el archivo (`Ctrl+O`, `Enter`) y sal (`Ctrl+X`).
+
+4. Habilita y arranca el servicio:
+   ```bash
+   sudo systemctl enable water_monitor.service
+   sudo systemctl start water_monitor.service
+   ```
+
+5. Verifica que esté corriendo:
+   ```bash
+   sudo systemctl status water_monitor.service
+   ```
+
 ## Detención
 
 Presiona `Ctrl+C` para detener el programa. Los pines GPIO se limpiarán automáticamente.
